@@ -1,7 +1,10 @@
-
+// This variable is used to get your most recent search from local storage and run it through the loadWeather 
+// function.
 var searchInput = JSON.parse(localStorage.getItem("searchInput"));
 loadWeather()
-
+// When the search button is clicked the text from the search field is used to restate the searchInput variable
+// localy and is then run through the loadWeather function. The value that is then sent to local storage is used 
+// to create a new <p> that goes into the #recent div and is givin an id of newBtn.
 $("#searchBtn").on("click", function(event){
     event.preventDefault();
     searchInput = $("#searchInput").val().trim();
@@ -11,13 +14,18 @@ $("#searchBtn").on("click", function(event){
     recent = recent.text(JSON.parse(localStorage.getItem("searchInput")));
     $("#recent").prepend(recent);
 });  
-
+// **This function does not work as expected** When one of the <p> tags with an id of newBtn is clicked the text
+// from that specific tag should be used to restate the searchInput variable localy and run it through the 
+// loadWeather function.
 $("#newBtn").on("click", function(){
     searchInput = $(this).text();
     console.log(searchInput)
     loadWeather();
 });
-
+//The loadWeather function utilizes the Open Weather Map Api in two different Api calls to grab the current : 
+// city, weather icon, temp, humidity, wind speed, uv index and the forecast data : temp, humidity, and weather icon.
+//Moment js is also utilized to convert the UNIX timestamps to the date that is displayed next to the city name and
+// in the five day forcast.
     function loadWeather(){
         var APIkey = "c0d3d17620b893f264681d297097a6e0";
         var currentURL = "https://api.openweathermap.org/data/2.5/weather?q=" + searchInput + "&appid=" + APIkey;
@@ -45,14 +53,14 @@ $("#newBtn").on("click", function(){
                 $("#wind").text("Wind Speed: " + res2.current.wind_speed + " mph");
                 $("#uv").text("UV Index: " + res2.current.uvi);
                 if (res2.current.uvi <= 3.33){
-                    $("#uv").attr("class", "green")
+                    $("#uv").attr("class", "green");
                 }
-                if (res2.current.uvi > 3.33 || res2.current.uvi <= 6.66){
-                    $("#uv").attr("class", "yellow")
-                }
-                if (res2.current.uvi > 6.66){
-                    $("#uv").attr("class", "red")
-                }
+                    else if (res2.current.uvi > 3.33 || res2.current.uvi <= 6.66){
+                        $("#uv").attr("class", "yellow");
+                    }
+                        else if (res2.current.uvi > 6.66){
+                            $("#uv").attr("class", "red");
+                        }
 
                 $("#d1").text(moment.unix(res2.daily[1].dt).format("L"));
                 $("#i1").attr("src", "http://openweathermap.org/img/wn/" + res2.daily[1].weather[0].icon + ".png")
