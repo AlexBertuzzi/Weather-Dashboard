@@ -65,3 +65,15 @@ h4 {
     border-radius: 10px;
     text-align: center;
 }
+
+.green {
+    background-color: seagreen;
+}
+
+.yellow {
+    background-color: yellow;
+}
+
+.red {
+    background-color: tomato;
+}

@@ -13,11 +13,11 @@ $("#searchBtn").on("click", function(event){
 });  
 
 $("#newBtn").on("click", function(){
-    //event.preventDefault();
-    searchInput = $("#newBtn").text();
+    searchInput = $(this).text();
     console.log(searchInput)
     loadWeather();
 });
+
     function loadWeather(){
         var APIkey = "c0d3d17620b893f264681d297097a6e0";
         var currentURL = "https://api.openweathermap.org/data/2.5/weather?q=" + searchInput + "&appid=" + APIkey;
@@ -44,6 +44,15 @@ $("#newBtn").on("click", function(){
                 $("#temp").text(res2.current.temp + " Fahrenheit");
                 $("#wind").text("Wind Speed: " + res2.current.wind_speed + " mph");
                 $("#uv").text("UV Index: " + res2.current.uvi);
+                if (res2.current.uvi <= 3.33){
+                    $("#uv").attr("class", "green")
+                }
+                if (res2.current.uvi > 3.33 || res2.current.uvi <= 6.66){
+                    $("#uv").attr("class", "yellow")
+                }
+                if (res2.current.uvi > 6.66){
+                    $("#uv").attr("class", "red")
+                }
 
                 $("#d1").text(moment.unix(res2.daily[1].dt).format("L"));
                 $("#i1").attr("src", "http://openweathermap.org/img/wn/" + res2.daily[1].weather[0].icon + ".png")
