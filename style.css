@@ -68,12 +68,15 @@ h4 {
 
 .green {
     background-color: seagreen;
+    border-radius: 5px;
 }
 
 .yellow {
     background-color: yellow;
+    border-radius: 5px;
 }
 
 .red {
     background-color: tomato;
+    border-radius: 5px;
 }
